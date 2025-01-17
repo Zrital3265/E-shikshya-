@@ -1,4 +1,4 @@
-import { Menu, School } from "lucide-react";
+import { BookOpen, Menu, School } from "lucide-react";
 import React, { useEffect } from "react";
 import {
   DropdownMenu,
@@ -43,11 +43,11 @@ const Navbar = () => {
   }, [isSuccess]);
 
   return (
-    <div className="h-16 dark:bg-[#020817] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10">
+    <div className="h-16 dark:bg-[#020817] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10 ">
       {/* Desktop */}
-      <div className="max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full">
+      <div className="max-w-7xl md:max-w-full mx-auto hidden md:flex justify-between items-center gap-10 h-full px-4">
         <div className="flex items-center gap-2">
-          <School size={"30"} />
+          <BookOpen size={"27"} />
           <Link to="/">
             <h1 className="hidden md:block font-extrabold text-2xl">
               E-Shikshya
@@ -132,7 +132,7 @@ const MobileNavbar = ({user}) => {
           <DarkMode />
         </SheetHeader>
         <Separator className="mr-2" />
-        <nav className="flex flex-col space-y-4 bg-green-400">
+        <nav className="flex flex-col space-y-4 ">
           {/* <Link to="/my-Shikshya">My Learning</Link> */}
           <Link to="/profile">Edit Profile</Link>
           <p>Log out</p>
