@@ -13,38 +13,34 @@ import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
 
 const categories = [
-  { id: "nextjs", label: "Next JS" },
-  { id: "data science", label: "Data Science" },
-  { id: "frontend development", label: "Frontend Development" },
-  { id: "fullstack development", label: "Fullstack Development" },
-  { id: "mern stack development", label: "MERN Stack Development" },
-  { id: "backend development", label: "Backend Development" },
-  { id: "javascript", label: "Javascript" },
-  { id: "python", label: "Python" },
-  { id: "docker", label: "Docker" },
-  { id: "mongodb", label: "MongoDB" },
-  { id: "html", label: "HTML" },
+  { id: "Next JS", label: "Next JS" },
+  { id: "Data Science", label: "Data Science" },
+  { id: "Frontend Development", label: "Frontend Development" },
+  { id: "Fullstack Development", label: "Fullstack Development" },
+  { id: "MERN Stack Development", label: "MERN Stack Development" },
+  { id: "Backend Development", label: "Backend Development" },
+  { id: "Javascript", label: "Javascript" },
+  { id: "Python", label: "Python" },
+  { id: "Docker", label: "Docker" },
+  { id: "MongoDB", label: "MongoDB" },
+  { id: "HTML", label: "HTML" },
 ];
 
 const Filter = ({ handleFilterChange }) => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
 
   const handleCategoryChange = (categoryId) => {
-    setSelectedCategories((prevCategories) => {
-      const newCategories = prevCategories.includes(categoryId)
-        ? prevCategories.filter((id) => id !== categoryId)
-        : [...prevCategories, categoryId];
-
-        handleFilterChange(newCategories, sortByPrice);
-        return newCategories;
-    });
+    const newCategory = selectedCategory === categoryId ? "" : categoryId;
+    setSelectedCategory(newCategory);
+    handleFilterChange(newCategory ? [newCategory] : [], sortByPrice);
   };
 
   const selectByPriceHandler = (selectedValue) => {
     setSortByPrice(selectedValue);
-    handleFilterChange(selectedCategories, selectedValue);
-  }
+    handleFilterChange(selectedCategory ? [selectedCategory] : [], selectedValue);
+  };
+
   return (
     <div className="w-full md:w-[20%]">
       <div className="flex items-center justify-between">
@@ -69,6 +65,7 @@ const Filter = ({ handleFilterChange }) => {
           <div key={category.id} className="flex items-center space-x-2 my-2">
             <Checkbox
               id={category.id}
+              checked={selectedCategory === category.id}
               onCheckedChange={() => handleCategoryChange(category.id)}
             />
             <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
