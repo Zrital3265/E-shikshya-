@@ -78,8 +78,7 @@ const Profile = () => {
 
   const user = data && data.user;
 
-  console.log(user);
-  
+  const enrolledCourses = [1,2,3,4,5,6,7,8,9,10];
 
   return (
     <div className="max-w-4xl mx-auto px-4 my-10">

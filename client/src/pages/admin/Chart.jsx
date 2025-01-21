@@ -1,6 +1,8 @@
 "use client"
+
 import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+
 import {
   Card,
   CardContent,
@@ -22,11 +24,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useEffect } from "react"
-import { useState } from "react"
-import axios from "axios"
 
-const API_URL = "/api/get-chart-data"
+// Generate dates for the last 3 months from January 21, 2025
+const generateChartData = () => {
+  const data = []
+  const endDate = new Date('2025-01-21')
+  const startDate = new Date('2024-10-21') // 3 months before
+
+  for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+    data.push({
+      date: date.toISOString().split('T')[0],
+      desktop: Math.floor(Math.random() * 41) + 10, // Random values between 10 and 50
+      mobile: Math.floor(Math.random() * 71) + 30,  // Random values between 30 and 100
+    })
+  }
+  return data
+}
+
+const chartData = generateChartData()
 
 const chartConfig = {
   visitors: {
@@ -43,59 +58,29 @@ const chartConfig = {
 } 
 
 export function PieChartt() {
-  const [chartData, setChartData] = useState([]);
   const [timeRange, setTimeRange] = React.useState("90d")
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(API_URL);
-        setChartData(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
 
   const filteredData = chartData.filter((item) => {
     const date = new Date(item.date)
-    const referenceDate = new Date("2024-06-30")
+    const referenceDate = new Date("2025-01-21") // Current date
     let daysToSubtract = 90
     if (timeRange === "30d") {
       daysToSubtract = 30
     } else if (timeRange === "7d") {
       daysToSubtract = 7
     }
-    
     const startDate = new Date(referenceDate)
     startDate.setDate(startDate.getDate() - daysToSubtract)
     return date >= startDate
   })
 
-
-  if (isLoading) {
-    return <p>Loading chart data...</p>;
-  }
-
-  if (error) {
-    return <p>Error loading chart data: {error}</p>;
-  }
-
   return (
     <Card>
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle >Area Chart - Total Site Visitors</CardTitle>
+          <CardTitle>Area Chart For Visitors</CardTitle>
           <CardDescription>
-            {/* Showing total visitors for the last 3 months */}
+            Showing total visitors for the last {timeRange === "90d" ? "3 months" : timeRange === "30d" ? "30 days" : "7 days"}
           </CardDescription>
         </div>
         <Select value={timeRange} onValueChange={setTimeRange}>

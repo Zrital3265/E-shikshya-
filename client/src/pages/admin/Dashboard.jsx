@@ -27,7 +27,7 @@ const Dashboard = () => {
 
 const totalRevenue = purchasedCourse?.reduce((acc, element) => acc + (element?.amount || 0), 0) || 0;
 const totalSales = purchasedCourse?.length || 0;
-const totalStudents = new Set(purchasedCourse?.map(course => course?.userId)).size || 0;
+const totalStudents = new Set(purchasedCourse?.map(course => course?.userId)).size - 1 || 0;
 // const totalMaterials = new Set(purchasedCourse?.filter(course => course?.courseId?._id && course?.courseId?.isPublished)).map(course => course?.courseId?._id).size || 0;
 
 const filteredCourses = purchasedCourse?.filter(course => course?.courseId?._id && course?.courseId?.isPublished);

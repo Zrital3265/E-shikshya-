@@ -72,7 +72,7 @@ const Navbar = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    {/* <Link to="my-Shikshya">My Shikshya</Link> */}
+                    <Link to="my-learning">My Learning</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     {" "}
@@ -133,8 +133,8 @@ const MobileNavbar = ({user}) => {
         </SheetHeader>
         <Separator className="mr-2" />
         <nav className="flex flex-col space-y-4 ">
-          {/* <Link to="/my-Shikshya">My Learning</Link> */}
           <Link to="/profile">Edit Profile</Link>
+          <Link to="/my-Shikshya">My Learning</Link>
           <p>Log out</p>
         </nav>
         {user?.role === "instructor" && (
