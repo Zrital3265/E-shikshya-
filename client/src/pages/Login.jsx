@@ -1,4 +1,3 @@
-// McgPr7oX7v1mMcbN
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -183,10 +182,19 @@ const Login = () => {
                   placeholder="Eg. xyz"
                   required="true"
                 />
+            <div className="text-right">
+              <Button
+                className="font-thin"
+                variant="link"
+                onClick={() => navigate("/forgot-password")}
+              >
+                Forgot password?
+              </Button>
+            </div>
               </div>
             </CardContent>
             <CardFooter>
-              <Button
+              <Button 
                 disabled={loginIsLoading}
                 onClick={() => handleRegistration("login")}
               >
