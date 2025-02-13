@@ -1,4 +1,3 @@
-// McgPr7oX7v1mMcbN
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -57,34 +56,52 @@ const Login = () => {
     }
   };
 
+  //simple validation 
+  const validateInput = (input, type) => {
+    if (type === "signup" && !input.name) {
+      toast.error("Name is required");
+      return false;
+    }
+    if (!input.email || !input.email.includes("@")) {
+      toast.error("Please enter a valid email");
+      return false;
+    }
+    if (!input.password || input.password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return false;
+    }
+    return true;
+  };
+
   const handleRegistration = async (type) => {
     const inputData = type === "signup" ? signupInput : loginInput;
+    if (!validateInput(inputData, type)) return;
+
     const action = type === "signup" ? registerUser : loginUser;
-    await action(inputData);
+
+    try {
+      await action(inputData).unwrap();
+    } catch (error) {
+      console.error("Registration/Login failed:", error);
+    }
   };
 
   useEffect(() => {
-    if(registerIsSuccess && registerData){
-      toast.success(registerData.message || "Signup successful.")
+    if (registerIsSuccess && registerData) {
+      toast.success(registerData.message || "Signup successful.");
+      navigate("/login");
     }
-    if(registerError){
+    if (registerError) {
       toast.error(registerError.data.message || "Signup Failed");
     }
-    if(loginIsSuccess && loginData){
+    if (loginIsSuccess && loginData) {
       toast.success(loginData.message || "Login successful.");
       navigate("/");
     }
-    if(loginError){ 
-      toast.error(loginError.data.message || "login Failed");
+    if (loginError) {
+      toast.error(loginError.data.message || "Login Failed");
     }
-  }, [
-    loginIsLoading,
-    registerIsLoading,
-    loginData,
-    registerData,
-    loginError,
-    registerError,
-  ]);
+  }, [loginData, registerData, loginError, registerError, loginIsSuccess, registerIsSuccess, navigate]);
 
   return (
     <div className="flex items-center w-full justify-center mt-20">
@@ -109,8 +126,8 @@ const Login = () => {
                   name="name"
                   value={signupInput.name}
                   onChange={(e) => changeInputHandler(e, "signup")}
-                  placeholder="Eg. patel"
-                  required="true"
+                  placeholder="Eg. kritan"
+                  required
                 />
               </div>
               <div className="space-y-1">
@@ -120,8 +137,8 @@ const Login = () => {
                   name="email"
                   value={signupInput.email}
                   onChange={(e) => changeInputHandler(e, "signup")}
-                  placeholder="Eg. patel@gmail.com"
-                  required="true"
+                  placeholder="Eg. kritan@gmail.com"
+                  required
                 />
               </div>
               <div className="space-y-1">
@@ -132,7 +149,7 @@ const Login = () => {
                   value={signupInput.password}
                   onChange={(e) => changeInputHandler(e, "signup")}
                   placeholder="Eg. xyz"
-                  required="true"
+                  required
                 />
               </div>
             </CardContent>
@@ -143,8 +160,7 @@ const Login = () => {
               >
                 {registerIsLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please
-                    wait
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
                   </>
                 ) : (
                   "Signup"
@@ -169,8 +185,8 @@ const Login = () => {
                   name="email"
                   value={loginInput.email}
                   onChange={(e) => changeInputHandler(e, "login")}
-                  placeholder="Eg. patel@gmail.com"
-                  required="true"
+                  placeholder="Eg. kritan@gmail.com"
+                  required
                 />
               </div>
               <div className="space-y-1">
@@ -181,8 +197,17 @@ const Login = () => {
                   value={loginInput.password}
                   onChange={(e) => changeInputHandler(e, "login")}
                   placeholder="Eg. xyz"
-                  required="true"
+                  required
                 />
+                <div className="text-right">
+                  <Button
+                    className="font-thin"
+                    variant="link"
+                    onClick={() => navigate("/forgot-password")}
+                  >
+                    Forgot password?
+                  </Button>
+                </div>
               </div>
             </CardContent>
             <CardFooter>
@@ -192,8 +217,7 @@ const Login = () => {
               >
                 {loginIsLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please
-                    wait
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
                   </>
                 ) : (
                   "Login"
@@ -206,4 +230,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

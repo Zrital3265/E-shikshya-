@@ -23,6 +23,7 @@ import {
 } from "./components/ProtectedRoutes";
 import PurchaseCourseProtectedRoute from "./components/PurchaseCourseProtectedRoute";
 import { ThemeProvider } from "./components/ThemeProvider";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const appRouter = createBrowserRouter([
   {
@@ -44,6 +45,12 @@ const appRouter = createBrowserRouter([
           <AuthenticatedUser>
             <Login />
           </AuthenticatedUser>
+        ),
+      },
+      {
+        path: "forgot-password",
+        element: (
+<ForgotPassword />
         ),
       },
       {
