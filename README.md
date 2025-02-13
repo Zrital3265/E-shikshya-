@@ -1,1 +1,1 @@
-FUll stack crash course with this LMS. 
+A simple crash course on full-stack with stripe.
