@@ -4,7 +4,7 @@ import crypto from "crypto";
 import ejs from "ejs";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
-import {User} from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -12,7 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
-console.log(email)
+  console.log(email);
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -25,8 +25,11 @@ console.log(email)
     await user.save();
 
     const templatePath = path.join(__dirname, "../view/email/resetCode.ejs");
-    const htmlContent = await ejs.renderFile(templatePath, { activationCode:resetCode, user: { name: user.name }});
-    
+    const htmlContent = await ejs.renderFile(templatePath, {
+      activationCode: resetCode,
+      user: { name: user.name },
+    });
+
     // console.log("Starting password reset process"); // Before everything
 
     const transporter = nodemailer.createTransport({
@@ -36,18 +39,18 @@ console.log(email)
         pass: process.env.EMAIL_PASS,
       },
     });
-    
+
     // console.log("Transporter created"); // Check if transporter is initialized
-    
-     await transporter.sendMail({
+
+    await transporter.sendMail({
       from: `E-shikshya <${process.env.EMAIL_USER}>`,
       to: user.email,
       subject: "Your Password Reset Code",
       html: htmlContent,
     });
-    
+
     // console.log("Email send info:", info); // Check if email sending succeeds
-  
+
     res.status(200).json({ success: true, message: "Reset code sent to your email" });
   } catch (error) {
     console.error("Forgot Password Error:", error); // Log the actual error
@@ -73,7 +76,7 @@ export const resetPassword = async (req, res) => {
 
     // Add password comparison check
     const isSamePassword = await bcrypt.compare(newPassword, user.password);
-    
+
     if (isSamePassword) {
       return res.status(400).json({
         success: false,
@@ -87,10 +90,9 @@ export const resetPassword = async (req, res) => {
     user.resetPasswordCode = undefined;
     user.resetPasswordCodeExpires = undefined;
 
-
     // Clear reset code fields after successful reset
     user.resetPasswordCode = undefined;
-    user.resetPasswordCodeExpires = undefined;  
+    user.resetPasswordCodeExpires = undefined;
     await user.save();
 
     res.status(200).json({ success: true, message: "Password reset successful" });

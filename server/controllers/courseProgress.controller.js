@@ -85,8 +85,7 @@ export const updateLectureProgress = async (req, res) => {
 
     const course = await Course.findById(courseId);
 
-    if (course.lectures.length === lectureProgressLength)
-      courseProgress.completed = true;
+    if (course.lectures.length === lectureProgressLength) courseProgress.completed = true;
 
     await courseProgress.save();
 
@@ -104,12 +103,9 @@ export const markAsCompleted = async (req, res) => {
     const userId = req.id;
 
     const courseProgress = await CourseProgress.findOne({ courseId, userId });
-    if (!courseProgress)
-      return res.status(404).json({ message: "Course progress not found" });
+    if (!courseProgress) return res.status(404).json({ message: "Course progress not found" });
 
-    courseProgress.lectureProgress.map(
-      (lectureProgress) => (lectureProgress.viewed = true)
-    );
+    courseProgress.lectureProgress.map((lectureProgress) => (lectureProgress.viewed = true));
     courseProgress.completed = true;
     await courseProgress.save();
     return res.status(200).json({ message: "Course marked as completed." });
@@ -119,21 +115,18 @@ export const markAsCompleted = async (req, res) => {
 };
 
 export const markAsInCompleted = async (req, res) => {
-    try {
-      const { courseId } = req.params;
-      const userId = req.id;
-  
-      const courseProgress = await CourseProgress.findOne({ courseId, userId });
-      if (!courseProgress)
-        return res.status(404).json({ message: "Course progress not found" });
-  
-      courseProgress.lectureProgress.map(
-        (lectureProgress) => (lectureProgress.viewed = false)
-      );
-      courseProgress.completed = false;
-      await courseProgress.save();
-      return res.status(200).json({ message: "Course marked as incompleted." });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  try {
+    const { courseId } = req.params;
+    const userId = req.id;
+
+    const courseProgress = await CourseProgress.findOne({ courseId, userId });
+    if (!courseProgress) return res.status(404).json({ message: "Course progress not found" });
+
+    courseProgress.lectureProgress.map((lectureProgress) => (lectureProgress.viewed = false));
+    courseProgress.completed = false;
+    await courseProgress.save();
+    return res.status(200).json({ message: "Course marked as incompleted." });
+  } catch (error) {
+    console.log(error);
+  }
+};

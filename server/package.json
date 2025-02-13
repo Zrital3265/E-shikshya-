@@ -4,6 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
     "dev": "nodemon index.js"
   },
   "keywords": [],
@@ -25,5 +27,8 @@
     "nodemailer": "^6.10.0",
     "nodemon": "^3.1.7",
     "stripe": "^17.3.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.1"
   }
 }

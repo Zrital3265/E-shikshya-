@@ -1,10 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  useCreateLectureMutation,
-  useGetCourseLectureQuery,
-} from "@/features/api/courseApi";
+import { useCreateLectureMutation, useGetCourseLectureQuery } from "@/features/api/courseApi";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,8 +14,7 @@ const CreateLecture = () => {
   const courseId = params.courseId;
   const navigate = useNavigate();
 
-  const [createLecture, { data, isLoading, isSuccess, error }] =
-    useCreateLectureMutation();
+  const [createLecture, { data, isLoading, isSuccess, error }] = useCreateLectureMutation();
 
   const {
     data: lectureData,
@@ -50,8 +46,7 @@ const CreateLecture = () => {
           Let's add lectures, add some basic details for your new lecture
         </h1>
         <p className="text-sm">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus,
-          laborum!
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, laborum!
         </p>
       </div>
       <div className="space-y-4">
@@ -65,10 +60,7 @@ const CreateLecture = () => {
           />
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            onClick={() => navigate(`/admin/course/${courseId}`)}
-          >
+          <Button variant="outline" onClick={() => navigate(`/admin/course/${courseId}`)}>
             Back to course
           </Button>
           <Button disabled={isLoading} onClick={createLectureHandler}>
@@ -91,12 +83,7 @@ const CreateLecture = () => {
             <p>No lectures availabe</p>
           ) : (
             lectureData.lectures.map((lecture, index) => (
-              <Lecture
-                key={lecture._id}
-                lecture={lecture}
-                courseId={courseId}
-                index={index}
-              />
+              <Lecture key={lecture._id} lecture={lecture} courseId={courseId} index={index} />
             ))
           )}
         </div>
