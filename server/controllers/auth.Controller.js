@@ -60,6 +60,7 @@ export const resetPassword = async (req, res) => {
   const { email, resetCode, newPassword } = req.body;
 
   try {
+    // Find user with valid reset code and unexpired timestamp
     const user = await User.findOne({
       email,
       resetPasswordCode: resetCode,
@@ -70,14 +71,50 @@ export const resetPassword = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid or expired code" });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
+    // Add password comparison check
+    const isSamePassword = await bcrypt.compare(newPassword, user.password);
+    
+    if (isSamePassword) {
+      return res.status(400).json({
+        success: false,
+        message: "New password must be different from current password",
+      });
+    }
 
+    // Hash and Update password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
     user.resetPasswordCode = undefined;
     user.resetPasswordCodeExpires = undefined;
+
+
+    // Clear reset code fields after successful reset
+    user.resetPasswordCode = undefined;
+    user.resetPasswordCodeExpires = undefined;  
     await user.save();
 
     res.status(200).json({ success: true, message: "Password reset successful" });
+  } catch (error) {
+    console.error("Reset Password Error:", error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
+export const verifyOtp = async (req, res) => {
+  const { email, resetCode } = req.body;
+
+  try {
+    const user = await User.findOne({
+      email,
+      resetPasswordCode: resetCode,
+      resetPasswordCodeExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ success: false, message: "Invalid or expired OTP." });
+    }
+
+    res.status(200).json({ success: true, message: "OTP verified successfully." });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error", error: error.message });
   }

@@ -66,6 +66,23 @@ export const authApi = createApi({
               body: email,
             }),
           }),
+
+          verifyOtp: builder.mutation({
+            query: (data) => ({
+              url: "http://localhost:8080/api/v1/verify-otp",
+              method: "POST",
+              body: data,
+            }),
+          }),
+          
+          resetPassword: builder.mutation({
+            query: (data) => ({
+              url: "http://localhost:8080/api/v1/reset-password",
+              method: "POST",
+              body: data,
+            }),
+          }),
+
           
         updateUser: builder.mutation({
             query: (formData) => ({
@@ -83,5 +100,7 @@ export const {
     useLogoutUserMutation,
     useLoadUserQuery,
     useUpdateUserMutation,
-    useSendPasswordResetMutation
+    useSendPasswordResetMutation,
+    useVerifyOtpMutation, 
+    useResetPasswordMutation, 
 } = authApi;
