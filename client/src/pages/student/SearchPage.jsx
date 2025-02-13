@@ -14,9 +14,9 @@ const SearchPage = () => {
   const [sortByPrice, setSortByPrice] = useState("");
 
   const { data, isLoading } = useGetSearchCourseQuery({
-    searchQuery:query,
-    categories:selectedCategories,
-    sortByPrice
+    searchQuery: query,
+    categories: selectedCategories,
+    sortByPrice,
   });
 
   const isEmpty = !isLoading && data?.courses.length === 0;
@@ -24,7 +24,7 @@ const SearchPage = () => {
   const handleFilterChange = (categories, price) => {
     setSelectedCatgories(categories);
     setSortByPrice(price);
-  }
+  };
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-8">
       <div className="my-6">
@@ -35,16 +35,14 @@ const SearchPage = () => {
         </p>
       </div>
       <div className="flex flex-col md:flex-row gap-10">
-        <Filter handleFilterChange={handleFilterChange}/>
+        <Filter handleFilterChange={handleFilterChange} />
         <div className="flex-1">
           {isLoading ? (
-            Array.from({ length: 3 }).map((_, idx) => (
-              <CourseSkeleton key={idx} />
-            ))
+            Array.from({ length: 3 }).map((_, idx) => <CourseSkeleton key={idx} />)
           ) : isEmpty ? (
             <CourseNotFound />
           ) : (
-            data?.courses?.map((course) => <SearchResult key={course._id} course={course}/>)
+            data?.courses?.map((course) => <SearchResult key={course._id} course={course} />)
           )}
         </div>
       </div>

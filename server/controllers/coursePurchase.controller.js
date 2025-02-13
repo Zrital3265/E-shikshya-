@@ -51,9 +51,7 @@ export const createCheckoutSession = async (req, res) => {
     });
 
     if (!session.url) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Error while creating session" });
+      return res.status(400).json({ success: false, message: "Error while creating session" });
     }
 
     // Save the purchase record

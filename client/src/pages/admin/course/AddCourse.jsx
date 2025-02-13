@@ -20,8 +20,7 @@ const AddCourse = () => {
   const [courseTitle, setCourseTitle] = useState("");
   const [category, setCategory] = useState("");
 
-  const [createCourse, { data, isLoading, error, isSuccess }] =
-    useCreateCourseMutation();
+  const [createCourse, { data, isLoading, error, isSuccess }] = useCreateCourseMutation();
 
   const navigate = useNavigate();
 
@@ -34,12 +33,12 @@ const AddCourse = () => {
   };
 
   // for displaying toast
-  useEffect(()=>{
-    if(isSuccess){
-        toast.success(data?.message || "Course created.");
-        navigate("/admin/course");
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message || "Course created.");
+      navigate("/admin/course");
     }
-  },[isSuccess, error])
+  }, [isSuccess, error]);
 
   return (
     <div className="flex-1 mx-10">
@@ -48,8 +47,7 @@ const AddCourse = () => {
           Lets add course, add some basic course details for your new course
         </h1>
         <p className="text-sm">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus,
-          laborum!
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, laborum!
         </p>
       </div>
       <div className="space-y-4">
@@ -73,15 +71,9 @@ const AddCourse = () => {
                 <SelectLabel>Category</SelectLabel>
                 <SelectItem value="Next JS">Next JS</SelectItem>
                 <SelectItem value="Data Science">Data Science</SelectItem>
-                <SelectItem value="Frontend Development">
-                  Frontend Development
-                </SelectItem>
-                <SelectItem value="Fullstack Development">
-                  Fullstack Development
-                </SelectItem>
-                <SelectItem value="MERN Stack Development">
-                  MERN Stack Development
-                </SelectItem>
+                <SelectItem value="Frontend Development">Frontend Development</SelectItem>
+                <SelectItem value="Fullstack Development">Fullstack Development</SelectItem>
+                <SelectItem value="MERN Stack Development">MERN Stack Development</SelectItem>
                 <SelectItem value="Javascript">Javascript</SelectItem>
                 <SelectItem value="Python">Python</SelectItem>
                 <SelectItem value="Docker">Docker</SelectItem>

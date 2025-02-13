@@ -15,18 +15,13 @@ import { toast } from "sonner";
 const CourseProgress = () => {
   const params = useParams();
   const courseId = params.courseId;
-  const { data, isLoading, isError, refetch } =
-    useGetCourseProgressQuery(courseId);
+  const { data, isLoading, isError, refetch } = useGetCourseProgressQuery(courseId);
 
   const [updateLectureProgress] = useUpdateLectureProgressMutation();
-  const [
-    completeCourse,
-    { data: markCompleteData, isSuccess: completedSuccess },
-  ] = useCompleteCourseMutation();
-  const [
-    inCompleteCourse,
-    { data: markInCompleteData, isSuccess: inCompletedSuccess },
-  ] = useInCompleteCourseMutation();
+  const [completeCourse, { data: markCompleteData, isSuccess: completedSuccess }] =
+    useCompleteCourseMutation();
+  const [inCompleteCourse, { data: markInCompleteData, isSuccess: inCompletedSuccess }] =
+    useInCompleteCourseMutation();
 
   useEffect(() => {
     console.log(markCompleteData);
@@ -52,8 +47,7 @@ const CourseProgress = () => {
   const { courseTitle } = courseDetails;
 
   // initialze the first lecture is not exist
-  const initialLecture =
-    currentLecture || (courseDetails.lectures && courseDetails.lectures[0]);
+  const initialLecture = currentLecture || (courseDetails.lectures && courseDetails.lectures[0]);
 
   const isLectureCompleted = (lectureId) => {
     return progress.some((prog) => prog.lectureId === lectureId && prog.viewed);
@@ -68,7 +62,6 @@ const CourseProgress = () => {
     setCurrentLecture(lecture);
     handleLectureProgress(lecture._id);
   };
-
 
   const handleCompleteCourse = async () => {
     await completeCourse(courseId);
@@ -104,9 +97,7 @@ const CourseProgress = () => {
               src={currentLecture?.videoUrl || initialLecture.videoUrl}
               controls
               className="w-full h-auto md:rounded-lg"
-              onPlay={() =>
-                handleLectureProgress(currentLecture?._id || initialLecture._id)
-              }
+              onPlay={() => handleLectureProgress(currentLecture?._id || initialLecture._id)}
             />
           </div>
           {/* Display current watching lecture title */}
@@ -114,12 +105,9 @@ const CourseProgress = () => {
             <h3 className="font-medium text-lg">
               {`Lecture ${
                 courseDetails.lectures.findIndex(
-                  (lec) =>
-                    lec._id === (currentLecture?._id || initialLecture._id)
+                  (lec) => lec._id === (currentLecture?._id || initialLecture._id)
                 ) + 1
-              } : ${
-                currentLecture?.lectureTitle || initialLecture.lectureTitle
-              }`}
+              } : ${currentLecture?.lectureTitle || initialLecture.lectureTitle}`}
             </h3>
           </div>
         </div>
@@ -131,9 +119,7 @@ const CourseProgress = () => {
               <Card
                 key={lecture._id}
                 className={`mb-3 hover:cursor-pointer transition transform ${
-                  lecture._id === currentLecture?._id
-                    ? "bg-gray-200 dark:dark:bg-gray-800"
-                    : ""
+                  lecture._id === currentLecture?._id ? "bg-gray-200 dark:dark:bg-gray-800" : ""
                 } `}
                 onClick={() => handleSelectLecture(lecture)}
               >
@@ -145,16 +131,11 @@ const CourseProgress = () => {
                       <CirclePlay size={24} className="text-gray-500 mr-2" />
                     )}
                     <div>
-                      <CardTitle className="text-lg font-medium">
-                        {lecture.lectureTitle}
-                      </CardTitle>
+                      <CardTitle className="text-lg font-medium">{lecture.lectureTitle}</CardTitle>
                     </div>
                   </div>
                   {isLectureCompleted(lecture._id) && (
-                    <Badge
-                      variant={"outline"}
-                      className="bg-green-200 text-green-600"
-                    >
+                    <Badge variant={"outline"} className="bg-green-200 text-green-600">
                       Completed
                     </Badge>
                   )}

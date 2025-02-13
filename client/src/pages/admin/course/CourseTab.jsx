@@ -1,12 +1,6 @@
 import RichTextEditor from "@/components/RichTextEditor";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -30,7 +24,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const CourseTab = () => {
-  
   const [input, setInput] = useState({
     courseTitle: "",
     subTitle: "",
@@ -43,15 +36,18 @@ const CourseTab = () => {
 
   const params = useParams();
   const courseId = params.courseId;
-  const { data: courseByIdData, isLoading: courseByIdLoading , refetch} =
-    useGetCourseByIdQuery(courseId);
+  const {
+    data: courseByIdData,
+    isLoading: courseByIdLoading,
+    refetch,
+  } = useGetCourseByIdQuery(courseId);
 
-    const [publishCourse] = usePublishCourseMutation();
-    const [removeCourse] = useRemoveCourseMutation();  
-    
+  const [publishCourse] = usePublishCourseMutation();
+  const [removeCourse] = useRemoveCourseMutation();
+
   useEffect(() => {
-    if (courseByIdData?.course) { 
-        const course = courseByIdData?.course;
+    if (courseByIdData?.course) {
+      const course = courseByIdData?.course;
       setInput({
         courseTitle: course.courseTitle,
         subTitle: course.subTitle,
@@ -106,24 +102,24 @@ const CourseTab = () => {
 
   const publishStatusHandler = async (action) => {
     try {
-      const response = await publishCourse({courseId, query:action});
-      if(response.data){
+      const response = await publishCourse({ courseId, query: action });
+      if (response.data) {
         refetch();
         toast.success(response.data.message);
       }
     } catch (error) {
       toast.error("Failed to publish or unpublish course");
     }
-  }
+  };
 
   const removeCourseHandler = async () => {
     const response = await removeCourse(courseId);
-if (response.error) {
-  toast.error("Failed to remove course");
-} else {
-  toast.success("Course removed successfully");
-  navigate(-1);  // Navigate back after successful removal
-}
+    if (response.error) {
+      toast.error("Failed to remove course");
+    } else {
+      toast.success("Course removed successfully");
+      navigate(-1); // Navigate back after successful removal
+    }
   };
 
   useEffect(() => {
@@ -135,8 +131,8 @@ if (response.error) {
     }
   }, [isSuccess, error]);
 
-  if(courseByIdLoading) return <h1>Loading...</h1>
- 
+  if (courseByIdLoading) return <h1>Loading...</h1>;
+
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between">
@@ -147,7 +143,13 @@ if (response.error) {
           </CardDescription>
         </div>
         <div className="space-x-2">
-          <Button disabled={courseByIdData?.course.lectures.length === 0} variant="outline" onClick={()=> publishStatusHandler(courseByIdData?.course.isPublished ? "false" : "true")}>
+          <Button
+            disabled={courseByIdData?.course.lectures.length === 0}
+            variant="outline"
+            onClick={() =>
+              publishStatusHandler(courseByIdData?.course.isPublished ? "false" : "true")
+            }
+          >
             {courseByIdData?.course.isPublished ? "Unpublished" : "Publish"}
           </Button>
           <Button onClick={removeCourseHandler}>Remove Course</Button> {/* Add onClick handler */}
@@ -182,10 +184,7 @@ if (response.error) {
           <div className="flex items-center gap-5">
             <div>
               <Label>Category</Label>
-              <Select
-                defaultValue={input.category}
-                onValueChange={selectCategory}
-              >
+              <Select defaultValue={input.category} onValueChange={selectCategory}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
@@ -194,15 +193,9 @@ if (response.error) {
                     <SelectLabel>Category</SelectLabel>
                     <SelectItem value="Next JS">Next JS</SelectItem>
                     <SelectItem value="Data Science">Data Science</SelectItem>
-                    <SelectItem value="Frontend Development">
-                      Frontend Development
-                    </SelectItem>
-                    <SelectItem value="Fullstack Development">
-                      Fullstack Development
-                    </SelectItem>
-                    <SelectItem value="MERN Stack Development">
-                      MERN Stack Development
-                    </SelectItem>
+                    <SelectItem value="Frontend Development">Frontend Development</SelectItem>
+                    <SelectItem value="Fullstack Development">Fullstack Development</SelectItem>
+                    <SelectItem value="MERN Stack Development">MERN Stack Development</SelectItem>
                     <SelectItem value="Javascript">Javascript</SelectItem>
                     <SelectItem value="Python">Python</SelectItem>
                     <SelectItem value="Docker">Docker</SelectItem>
@@ -214,10 +207,7 @@ if (response.error) {
             </div>
             <div>
               <Label>Course Level</Label>
-              <Select
-                defaultValue={input.courseLevel}
-                onValueChange={selectCourseLevel}
-              >
+              <Select defaultValue={input.courseLevel} onValueChange={selectCourseLevel}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select a course level" />
                 </SelectTrigger>
@@ -245,18 +235,9 @@ if (response.error) {
           </div>
           <div>
             <Label>Course Thumbnail</Label>
-            <Input
-              type="file"
-              onChange={selectThumbnail}
-              accept="image/*"
-              className="w-fit"
-            />
+            <Input type="file" onChange={selectThumbnail} accept="image/*" className="w-fit" />
             {previewThumbnail && (
-              <img
-                src={previewThumbnail}
-                className="e-64 my-2"
-                alt="Course Thumbnail"
-              />
+              <img src={previewThumbnail} className="e-64 my-2" alt="Course Thumbnail" />
             )}
           </div>
           <div>

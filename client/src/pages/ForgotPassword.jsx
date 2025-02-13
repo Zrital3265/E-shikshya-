@@ -3,7 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useSendPasswordResetMutation, useVerifyOtpMutation, useResetPasswordMutation } from "@/features/api/authApi";
+import {
+  useSendPasswordResetMutation,
+  useVerifyOtpMutation,
+  useResetPasswordMutation,
+} from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +16,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const navigate = useNavigate();  // Initialize navigate
+  const navigate = useNavigate(); // Initialize navigate
 
   const [sendPasswordReset, { isLoading: isSending }] = useSendPasswordResetMutation();
   const [verifyOtp, { isLoading: isVerifying }] = useVerifyOtpMutation(); // New API call for OTP verification
@@ -23,7 +27,7 @@ const ForgotPassword = () => {
 
     if (!email || !emailRegex.test(email)) {
       toast.error("Please enter a valid email.");
-      return; 
+      return;
     }
 
     try {
@@ -59,7 +63,7 @@ const ForgotPassword = () => {
     try {
       const response = await resetPassword({ email, resetCode: otp, newPassword }).unwrap();
       toast.success(response?.message || "Password reset successful!");
-      navigate('/login');  
+      navigate("/login");
       setEmail("");
       setOtp("");
       setNewPassword("");

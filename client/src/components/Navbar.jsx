@@ -49,9 +49,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <BookOpen size={"27"} />
           <Link to="/">
-            <h1 className="hidden md:block font-extrabold text-2xl">
-              E-Shikshya
-            </h1>
+            <h1 className="hidden md:block font-extrabold text-2xl">E-Shikshya</h1>
           </Link>
         </div>
         {/* User icons and dark mode icon  */}
@@ -78,14 +76,14 @@ const Navbar = () => {
                     {" "}
                     <Link to="profile">Edit Profile</Link>{" "}
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={logoutHandler}>
-                    Log out
-                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={logoutHandler}>Log out</DropdownMenuItem>
                 </DropdownMenuGroup>
                 {user?.role === "instructor" && (
                   <>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem><Link to="/admin/dashboard">Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link to="/admin/dashboard">Dashboard</Link>
+                    </DropdownMenuItem>
                   </>
                 )}
               </DropdownMenuContent>
@@ -104,7 +102,7 @@ const Navbar = () => {
       {/* Mobile device  */}
       <div className="flex md:hidden items-center justify-between px-4 h-full">
         <h1 className="font-extrabold text-2xl">E-Shikshya</h1>
-        <MobileNavbar user={user}/>
+        <MobileNavbar user={user} />
       </div>
     </div>
   );
@@ -112,23 +110,22 @@ const Navbar = () => {
 
 export default Navbar;
 
-const MobileNavbar = ({user}) => {
+const MobileNavbar = ({ user }) => {
   const navigate = useNavigate();
-  
+
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button
-          size="icon"
-          className="rounded-full hover:bg-gray-200"
-          variant="outline"
-        >
+        <Button size="icon" className="rounded-full hover:bg-gray-200" variant="outline">
           <Menu />
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col">
         <SheetHeader className="flex flex-row items-center justify-between mt-2">
-          <SheetTitle> <Link to="/">E-Shikshya</Link></SheetTitle>
+          <SheetTitle>
+            {" "}
+            <Link to="/">E-Shikshya</Link>
+          </SheetTitle>
           <DarkMode />
         </SheetHeader>
         <Separator className="mr-2" />
@@ -140,7 +137,9 @@ const MobileNavbar = ({user}) => {
         {user?.role === "instructor" && (
           <SheetFooter>
             <SheetClose asChild>
-              <Button type="submit" onClick={()=> navigate("/admin/dashboard")}>Dashboard</Button>
+              <Button type="submit" onClick={() => navigate("/admin/dashboard")}>
+                Dashboard
+              </Button>
             </SheetClose>
           </SheetFooter>
         )}
