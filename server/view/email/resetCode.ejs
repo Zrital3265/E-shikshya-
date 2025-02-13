@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShikshyaX activation mail</title>
+    <style type="text/css">
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #145b87;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #888888;
+            padding: 10px 0;
+            font-size: 12px;
+        }
+
+        .code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #148cc3;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome back to E-Shikshya</h1>
+        </div>
+        <div class="content">
+            <p>Greetings, <%= user.name %></p>
+
+            <p>
+                Thank you for signing up for our service! We're excited to have you back on
+                board again.
+            </p>
+            <p>
+                To reset the password, please confirm your email address by using the following activation code:
+            </p>
+
+            <h2 class="code"><%= activationCode %></h2>
+
+            <p>
+                If you have any questions, feel free to reply to this email. We're
+                here to help!
+            </p>
+            <p>Best regards,<br />The E-shikshya Team</p>
+        </div>
+    </div>
+        <div class="footer">
+            <p>&copy; 2024 E-shikshya. All rights reserved.</p>
+            <div class="email-footer">
+                <p>If you have any questions, please feel free to contact us at <a href="mailto:kyagya114@gmail.com">support@eshikshya.com</a></p>
+            </div>
+    </div> 
+</body>
+</html>
+

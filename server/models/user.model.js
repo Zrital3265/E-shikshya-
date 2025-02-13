@@ -7,12 +7,16 @@ const userSchema = new mongoose.Schema({
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        unique: true,
     },
     password:{
         type:String,
         required:true
     },
+    resetPasswordCode: String,
+    resetPasswordCodeExpires: Date,
+    
     role:{
         type:String,
         enum:["instructor", "student"],

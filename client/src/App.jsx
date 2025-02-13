@@ -48,7 +48,7 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "forget-password",
+        path: "forgot-password",
         element: (
 <ForgotPassword />
         ),

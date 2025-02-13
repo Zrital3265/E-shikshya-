@@ -61,11 +61,12 @@ export const authApi = createApi({
         }),
         sendPasswordReset: builder.mutation({
             query: (email) => ({
-              url: "/auth/forgot-password",
+              url: "http://localhost:8080/api/v1/forgot-password",
               method: "POST",
               body: email,
             }),
           }),
+          
         updateUser: builder.mutation({
             query: (formData) => ({
                 url:"profile/update",

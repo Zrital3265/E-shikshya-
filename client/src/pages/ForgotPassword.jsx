@@ -13,16 +13,16 @@ const ForgotPassword = () => {
   const handlePasswordReset = async () => {
     try {
       const response = await sendPasswordReset({ email });
-      toast.success(response?.data?.message || "Reset link sent to your email.");
+      toast.success(response?.data?.message || "Reset code sent to your mail sucessfully!.");
     } catch (error) {
-      toast.error(error?.data?.message || "Failed to send reset link.");
+      toast.error(error?.data?.message || "Failed to reset code.");
     }
   };
 
   return (
     <div className="flex items-center w-full justify-center mt-20">
       <div className="w-[400px]">
-        <h2 className="text-xl font-bold mb-4">Forgot Password</h2> 
+        <h2 className="text-xl font-bold mb-4">Forgot Password</h2>
         <Label htmlFor="email">Enter your email to reset password</Label>
         <Input
           type="email"
@@ -42,7 +42,7 @@ const ForgotPassword = () => {
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...
             </>
           ) : (
-            "Send Reset Link"
+            "Next"
           )}
         </Button>
       </div>
