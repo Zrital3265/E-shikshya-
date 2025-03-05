@@ -1,6 +1,6 @@
 
 
-### MongoDB Configuration
+### MongoDB Configuration :
 ```
 MONGO_URI=your-mongo-uri
 
@@ -10,7 +10,7 @@ SECRET_KEY=your-jwt-secret-key
 
 CLIENT_URL=your-client-url
 ```
-### Cloudinary Configuration
+### Cloudinary Configuration :
 ```
 API_KEY=your-cloudinary-api-key
 
@@ -19,7 +19,7 @@ API_SECRET=your-cloudinary-api-secret
 CLOUD_NAME=your-cloud-name
 ```
 
-### Stripe Configuration
+### Stripe Configuration :
 ```
 STRIPE_SECRET_KEY=your-stripe-secret-key
 
@@ -28,7 +28,7 @@ STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key
 WEBHOOK_ENDPOINT_SECRET=your-webhook-endpoint-secret
 ```
 
-### Email Configuration
+### Email Configuration :
 ```
 EMAIL_USER=your-email@example.com
 
